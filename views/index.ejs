@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title><%= title %></title>
+</head>
+<body>
+
+<%- include('partials/navbar') %>
+
+<h1>Guitar Overview</h1>
+
+<div>
+    <h3>Filter by Brand:</h3>
+    <ul>
+        <% brands.forEach(brand => { %>
+            <li>
+                <a href="/brand/<%= brand.id %>">
+                    <%= brand.brandName %> (<%= brand.country %>)
+                </a>
+            </li>
+        <% }); %>
+    </ul>
+</div>
+
+<table>
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Brand</th>
+        <th>Type</th>
+        <th>Description</th>
+        <th>Actions</th>
+    </tr>
+    </thead>
+    <tbody>
+    <% guitars.forEach(g => { %>
+        <tr>
+            <td><%= g.id %></td>
+            <td><%= g.name %></td>
+            <td>
+                <a href="/brand/<%= g.brand.id %>">
+                    <%= g.brand.brandName %>
+                </a>
+            </td>
+            <td><%= g.type.charAt(0).toUpperCase() + g.type.slice(1) %></td>
+            <td><%= g.description.length > 50 ? g.description.substring(0, 50) + '...' : g.description %></td>
+            <td>
+                <a href="/guitar/<%= g.id %>">View Details</a>
+            </td>
+        </tr>
+    <% }) %>
+    </tbody>
+</table>
+
+</body>
+</html>
