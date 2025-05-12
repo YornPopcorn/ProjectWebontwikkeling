@@ -1,3 +1,5 @@
+//TODO: json images juiste paden maken
+
 import { Brand, Guitar } from "../types";
 
 let guitarCache: Guitar[] = [];
