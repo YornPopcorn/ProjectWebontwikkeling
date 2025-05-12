@@ -84,4 +84,5 @@ router.get('/brands', async (req, res) => {
     }
 });
 
+
 export default router;
