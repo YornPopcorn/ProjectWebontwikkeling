@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="en">
+<%- include('partials/head') %>
+<body class="bg-light">
+<%- include('partials/navbar') %>
+
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            <h1 class="display-5 mb-4">Edit <%= guitar.name %></h1>
+
+            <form method="POST" action="/guitar/<%= guitar.id %>/edit">
+                <div class="mb-3">
+                    <label for="name" class="form-label">Guitar Name</label>
+                    <input type="text" class="form-control" id="name" name="name" value="<%= guitar.name %>" required>
+                </div>
+
+                <div class="mb-3">
+                    <label for="type" class="form-label">Type</label>
+                    <select class="form-select" id="type" name="type" required>
+                        <option value="electric" <%= guitar.type === 'electric' ? 'selected' : '' %>>Electric</option>
+                        <option value="acoustic" <%= guitar.type === 'acoustic' ? 'selected' : '' %>>Acoustic</option>
+                        <option value="bass" <%= guitar.type === 'bass' ? 'selected' : '' %>>Bass</option>
+                        <option value="classical" <%= guitar.type === 'classical' ? 'selected' : '' %>>Classical</option>
+                    </select>
+                </div>
+
+                <div class="mb-3">
+                    <label for="description" class="form-label">Description</label>
+                    <textarea class="form-control" id="description" name="description" rows="3" required><%= guitar.description %></textarea>
+                </div>
+
+                <div class="mb-3">
+                    <label for="age" class="form-label">Age (years)</label>
+                    <input type="number" class="form-control" id="age" name="age" value="<%= guitar.age %>" required>
+                </div>
+
+                <div class="mb-3">
+                    <label for="brandId" class="form-label">Brand</label>
+                    <select class="form-select" id="brandId" name="brandId" required>
+                        <% brands.forEach(brand => { %>
+                            <option value="<%= brand.id %>" <%= guitar.brand.id === brand.id ? 'selected' : '' %>>
+                                <%= brand.brandName %>
+                            </option>
+                        <% }); %>
+                    </select>
+                </div>
+
+                <button type="submit" class="btn btn-primary">Save Changes</button>
+                <a href="/guitar/<%= guitar.id %>" class="btn btn-outline-secondary ms-2">Cancel</a>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- Bootstrap Bundle with Popper -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

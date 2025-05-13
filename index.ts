@@ -7,11 +7,13 @@ import dotenv from "dotenv";
 import path from "path";
 import session from "express-session";
 
+
 // Routers
 import cardsRouter from "./routes/guitarRouter";
 import {fetchBrands, fetchGuitars} from "./services/data";
 import guitarRouter from "./routes/guitarRouter";
 import {Brand, Guitar} from "./types";
+
 
 dotenv.config();
 
