@@ -1,0 +1,175 @@
+
+<!doctype html>
+<html lang="en">
+<%- include('partials/head') %>
+<body class="bg-light">
+<%- include('partials/navbar') %>
+
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-12">
+            <h1 class="display-4 mb-4">Our Guitar Collection</h1>
+
+            <!-- Search filter -->
+            <div class="mb-4">
+                <div class="input-group">
+                    <input type="text" id="nameFilter" class="form-control" placeholder="Filter guitars by name...">
+                </div>
+            </div>
+
+            <!-- Sort options -->
+            <div class="mb-4">
+                <div class="btn-group">
+                    <button type="button" class="btn btn-outline-secondary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                        Sort by
+                    </button>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="#" onclick="sortGuitars('name', 'asc')">Name (A-Z)</a></li>
+                        <li><a class="dropdown-item" href="#" onclick="sortGuitars('name', 'desc')">Name (Z-A)</a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li><a class="dropdown-item" href="#" onclick="sortGuitars('brand', 'asc')">Brand (A-Z)</a></li>
+                        <li><a class="dropdown-item" href="#" onclick="sortGuitars('brand', 'desc')">Brand (Z-A)</a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li><a class="dropdown-item" href="#" onclick="sortGuitars('type', 'asc')">Type (A-Z)</a></li>
+                        <li><a class="dropdown-item" href="#" onclick="sortGuitars('age', 'desc')">Age (Oldest first)</a></li>
+                        <li><a class="dropdown-item" href="#" onclick="sortGuitars('age', 'asc')">Age (Newest first)</a></li>
+
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <!-- Filter Sidebar -->
+        <div class="col-md-3 mb-4">
+            <div class="card shadow-sm">
+                <div class="card-header bg-primary text-white">
+                    <h3 class="h5 mb-0">Our Brands</h3>
+                </div>
+                <div class="card-body">
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item">
+                            <a href="/guitars" class="text-decoration-none fw-bold">
+                                <i class="fas fa-guitar me-2"></i>
+                                All Guitars
+                            </a>
+                        </li>
+                        <% brands.forEach(brand => { %>
+                            <li class="list-group-item">
+                                <a href="/brand/<%= brand.id %>" class="text-decoration-none">
+                                    <i class="fas fa-guitar me-2"></i>
+                                    <%= brand.brandName %> <span class="badge bg-secondary"><%= brand.country %></span>
+                                </a>
+                            </li>
+                        <% }); %>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="col-md-9">
+            <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4" id="guitarsContainer">
+                <% guitars.forEach(guitar => { %>
+                    <div class="col guitar-card"
+                         data-name="<%= guitar.name.toLowerCase() %>"
+                         data-brand="<%= guitar.brand.brandName.toLowerCase() %>"
+                         data-type="<%= guitar.type.toLowerCase() %>"
+                         data-age="<%= guitar.age %>">
+                        <div class="card h-100 shadow-sm hover-shadow">
+                            <a href="/guitar/<%= guitar.id %>" class="text-decoration-none text-dark">
+                                <% if (guitar.imageURL) { %>
+                                    <img src="<%= guitar.imageURL %>" class="card-img-top" alt="<%= guitar.name %>" style="height: 180px; object-fit: cover;">
+                                <% } else { %>
+                                    <div class="bg-secondary text-white d-flex align-items-center justify-content-center" style="height: 180px;">
+                                        <i class="fas fa-guitar fa-3x"></i>
+                                    </div>
+                                <% } %>
+                                <div class="card-body">
+                                    <h5 class="card-title"><%= guitar.name %></h5>
+                                    <div class="d-flex justify-content-between align-items-center mb-2">
+                                        <span class="badge bg-info"><%= guitar.brand.brandName %></span>
+                                        <span class="badge bg-warning text-dark"><%= guitar.type.charAt(0).toUpperCase() + guitar.type.slice(1) %></span>
+                                    </div>
+                                    <p class="card-text small text-muted">
+                                        <%= guitar.description ? (guitar.description.length > 80 ? guitar.description.substring(0, 80) + '...' : guitar.description) : 'No description available' %>
+                                    </p>
+                                </div>
+                                <div class="card-footer bg-white border-top-0">
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <small class="text-muted">Age: <%= guitar.age %> years</small>
+                                        <span class="badge <%= guitar.active ? 'bg-success' : 'bg-secondary' %>">
+                                            <%= guitar.active ? 'Active' : 'Inactive' %>
+                                        </span>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                <% }); %>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Bootstrap Bundle with Popper -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/js/bootstrap.bundle.min.js"></script>
+<!-- Font Awesome for icons -->
+<script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+
+<style>
+    .hover-shadow:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15) !important;
+        transition: all 0.3s ease;
+    }
+</style>
+
+<script>
+    function filterGuitars() {
+        const filter = document.getElementById('nameFilter').value.toLowerCase();
+        const guitarCards = document.querySelectorAll('.guitar-card');
+
+        guitarCards.forEach(card => {
+            const guitarName = card.getAttribute('data-name');
+
+            if (guitarName.includes(filter)) {
+                card.style.display = '';
+            } else {
+                card.style.display = 'none';
+            }
+        });
+    }
+
+    function sortGuitars(field, direction) {
+        const container = document.getElementById('guitarsContainer');
+        const cards = Array.from(container.querySelectorAll('.guitar-card'));
+
+        cards.sort((a, b) => {
+            const valueA = a.getAttribute(`data-${field}`);
+            const valueB = b.getAttribute(`data-${field}`);
+
+            // For age, use numeric comparison
+            if (field === 'age') {
+                return direction === 'asc'
+                    ? parseInt(valueA) - parseInt(valueB)
+                    : parseInt(valueB) - parseInt(valueA);
+            }
+            // For text values, use string comparison
+            else {
+                return direction === 'asc'
+                    ? valueA.localeCompare(valueB)
+                    : valueB.localeCompare(valueA);
+            }
+        });
+
+        // Reorder cards
+        cards.forEach(card => container.appendChild(card));
+    }
+
+    // Real-time filtering
+    document.getElementById('nameFilter').addEventListener('keyup', filterGuitars);
+</script>
+</body>
+</html>

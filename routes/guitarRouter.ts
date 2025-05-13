@@ -1,32 +1,54 @@
 import express from 'express';
 import {
-    fetchBrands,
-    fetchGuitars,
+    getBrands,
+    getGuitars,
     getBrandById,
     getGuitarById,
     getGuitarsByBrandId,
-    getBrandsWithCounts  // Added the new function
-} from '../services/data';
-import { Brand, Guitar } from "../types";
+    getBrandsWithCounts,
+    updateGuitar
+} from '../services/dbService';
+
 
 const router = express.Router();
 
-router.get('/guitars', async (req, res) => {
+router.get('/', async (req, res) => {
     try {
         const [guitars, brands] = await Promise.all([
-            fetchGuitars(),
-            fetchBrands()
+            getGuitars(),
+            getBrands()
         ]);
         res.render('index', {
             guitars,
             brands,
-            title: "All Guitars"
+            title: "home",
+            activeTab: 'home'
         });
     } catch (error) {
         console.error('Error fetching guitars:', error);
         res.status(500).render('error', { message: 'Failed to load guitars' });
     }
 });
+
+router.get('/guitars', async (req, res) => {
+    res.redirect('/');
+});
+
+// New route for guitarOverView
+router.get('/guitarOverView', async (req, res) => {
+    try {
+        const guitars = await getGuitars();
+        res.render('guitarOverView', {
+            guitars,
+            title: "Our Guitar Collection",
+            activeTab: 'guitars'
+        });
+    } catch (error) {
+        console.error('Error fetching guitars:', error);
+        res.status(500).render('error', { message: 'Failed to load guitars' });
+    }
+});
+
 
 router.get('/guitar/:id', async (req, res) => {
     try {
@@ -83,6 +105,19 @@ router.get('/brands', async (req, res) => {
         res.status(500).render('error', { message: 'Failed to load brands' });
     }
 });
+
+
+
+router.get('/guitar/:id/edit', async (req, res) => {
+    const guitar = await getGuitarById(req.params.id);
+    const brands = await getBrands();
+    if (!guitar) {
+        return res.status(404).render('error', { message: 'Guitar not found' });
+    }
+    res.render('editGuitar', { guitar, brands, title: "Edit Guitar" });
+});
+
+
 
 
 export default router;
