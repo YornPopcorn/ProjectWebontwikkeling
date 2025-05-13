@@ -36,7 +36,7 @@ router.get('/guitar/:id', async (req, res) => {
                 message: `Guitar with ID ${req.params.id} not found`
             });
         }
-        res.render('detail', {
+        res.render('guitarDetail', {
             guitar,
             title: guitar.name
         });
@@ -59,7 +59,7 @@ router.get('/brand/:id', async (req, res) => {
             });
         }
 
-        res.render('brand', {
+        res.render('brandDetail', {
             brand,
             guitars,
             title: `${brand.brandName} Guitars`

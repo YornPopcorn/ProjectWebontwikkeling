@@ -22,7 +22,7 @@ export async function fetchBrands(): Promise<Brand[]> {
 }
 
 export async function getGuitarById(id: string): Promise<Guitar | null> {
-    const guitars = await fetchGuitars();
+    const guitars :Guitar[] = await fetchGuitars();
     return guitars.find(guitar => guitar.id.toString() === id) || null;
 }
 

@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="en">
+<%- include('partials/head') %>
+<body class="bg-light">
+<%- include('partials/navbar') %>
+
+<div class="container py-4">
+    <!-- Back button and header -->
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <a href="/guitars" class="btn btn-outline-secondary">
+            <i class="fas fa-arrow-left me-2"></i>Back to all guitars
+        </a>
+        <h1 class="display-4 mb-0"><%= brand.brandName %></h1>
+    </div>
+
+    <!-- Brand info card -->
+    <div class="card shadow-sm mb-4">
+        <div class="card-body">
+            <div class="d-flex flex-wrap justify-content-between align-items-center">
+                <div>
+                    <p class="h5 mb-1">
+                        <i class="fas fa-calendar-alt text-primary me-2"></i>
+                        Founded: <strong><%= brand.yearFounded %></strong> in <strong><%= brand.country %></strong>
+                    </p>
+                    <% if (brand.website) { %>
+                        <a href="<%= brand.website %>" target="_blank" class="btn btn-sm btn-outline-primary mt-2">
+                            <i class="fas fa-external-link-alt me-1"></i> Visit Official Website
+                        </a>
+                    <% } %>
+                </div>
+                <div class="mt-3 mt-sm-0">
+                    <span class="badge bg-info text-dark p-2">
+                        <i class="fas fa-guitar me-1"></i>
+                        <%= guitars.length %> <%= guitars.length === 1 ? 'Guitar' : 'Guitars' %>
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Guitars list -->
+    <div class="card shadow-sm">
+        <div class="card-header bg-primary text-white">
+            <h2 class="h5 mb-0">Guitar Models</h2>
+        </div>
+        <div class="card-body">
+            <% if (guitars.length > 0) { %>
+                <div class="list-group">
+                    <% guitars.forEach(guitar => { %>
+                        <a href="/guitar/<%= guitar.id %>" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
+                            <div>
+                                <span class="h5"><%= guitar.name %></span>
+                                <% if (guitar.brand && guitar.brand.id !== brand.id) { %>
+                                    <span class="badge bg-warning text-dark ms-2">Brand ID mismatch</span>
+                                <% } %>
+                            </div>
+                            <i class="fas fa-chevron-right text-muted"></i>
+                        </a>
+                    <% }); %>
+                </div>
+            <% } else { %>
+                <div class="alert alert-info mb-0">
+                    <i class="fas fa-info-circle me-2"></i>
+                    No guitars found for this brand.
+                </div>
+            <% } %>
+        </div>
+    </div>
+</div>
+
+<!-- Bootstrap Bundle with Popper -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+<!-- Font Awesome for icons -->
+<script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+</body>
+</html>

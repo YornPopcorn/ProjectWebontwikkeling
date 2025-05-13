@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="en">
+<%- include('partials/head') %>
+<body class="bg-light">
+<%- include('partials/navbar') %>
+
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            <!-- Back button -->
+            <a href="/guitars" class="btn btn-outline-secondary mb-4">
+                <i class="fas fa-arrow-left me-2"></i>Back to list
+            </a>
+
+            <!-- Guitar Card -->
+            <div class="card shadow-lg">
+                <div class="row g-0">
+                    <!-- Image Column -->
+                    <div class="col-md-5">
+                        <img src="<%= guitar.imageURL %>" class="img-fluid rounded-start h-100 object-fit-cover" alt="<%= guitar.name %>">
+                    </div>
+
+                    <!-- Details Column -->
+                    <div class="col-md-7">
+                        <div class="card-body">
+                            <h1 class="card-title display-5 mb-3"><%= guitar.name %></h1>
+
+                            <ul class="list-group list-group-flush mb-4">
+                                <li class="list-group-item">
+                                    <strong>Description:</strong>
+                                    <p class="mt-2"><%= guitar.description %></p>
+                                </li>
+                                <li class="list-group-item d-flex justify-content-between align-items-center">
+                                    <div>
+                                        <strong>Age:</strong>
+                                        <span class="badge bg-info"><%= guitar.age %> years</span>
+                                    </div>
+                                    <div>
+                                        <strong>Status:</strong>
+                                        <span class="badge <%= guitar.active ? 'bg-success' : 'bg-secondary' %>">
+                                            <%= guitar.active ? 'Active' : 'Inactive' %>
+                                        </span>
+                                    </div>
+                                </li>
+                                <li class="list-group-item">
+                                    <strong>Last Used:</strong>
+                                    <span class="text-muted"><%= new Date(guitar.usageDate).toLocaleDateString() %></span>
+                                </li>
+                                <li class="list-group-item">
+                                    <strong>Type:</strong>
+                                    <span class="badge bg-warning text-dark">
+                                        <%= guitar.type.charAt(0).toUpperCase() + guitar.type.slice(1) %>
+                                    </span>
+                                </li>
+                                <li class="list-group-item">
+                                    <strong>Genre(s):</strong>
+                                    <div class="mt-2">
+                                        <% guitar.genre.forEach(g => { %>
+                                            <span class="badge bg-primary me-1"><%= g %></span>
+                                        <% }); %>
+                                    </div>
+                                </li>
+                                <li class="list-group-item">
+                                    <strong>Brand:</strong>
+                                    <div class="mt-2">
+                                        <a href="/brand/<%= guitar.brand.id %>" class="h5 text-decoration-none">
+                                            <%= guitar.brand.brandName %>
+                                        </a>
+                                        <p class="mb-1">
+                                            Founded <%= guitar.brand.yearFounded %> in <%= guitar.brand.country %>
+                                        </p>
+                                        <% if (guitar.brand.website) { %>
+                                            <a href="<%= guitar.brand.website %>" target="_blank" class="btn btn-sm btn-outline-primary">
+                                                <i class="fas fa-external-link-alt me-1"></i> Visit website
+                                            </a>
+                                        <% } %>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Bootstrap Bundle with Popper -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+<!-- Font Awesome for icons -->
+<script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+</body>
+</html>
