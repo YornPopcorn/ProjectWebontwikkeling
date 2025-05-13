@@ -118,6 +118,42 @@ router.get('/guitar/:id/edit', async (req, res) => {
 });
 
 
+router.post('/guitar/:id/edit', async (req, res) => {
+    const guitarId = req.params.id;
+    const formData = req.body;
+    
+    try {
+        // Convert brandId to a number
+        formData.brandId = parseInt(formData.brandId);
+        
+        // Handle the boolean value for active
+        formData.active = formData.active === 'on';
+        
+        // Convert age to a number
+        formData.age = parseInt(formData.age);
+        
+        // Get the brand information
+        const brand = await getBrandById(formData.brandId);
+        
+        // Update the guitar with the form data
+        const updatedGuitar = {
+            name: formData.name,
+            description: formData.description,
+            age: formData.age,
+            active: formData.active,
+            type: formData.type,
+            brand: brand || undefined,
+        };
 
+        // Call a function to update the guitar in the database
+        await updateGuitar(parseInt(guitarId), updatedGuitar);
+        
+        // Redirect to the guitar detail page
+        res.redirect(`/guitar/${guitarId}`);
+    } catch (error) {
+        console.error('Error updating guitar:', error);
+        res.status(500).render('error', { message: 'Failed to update guitar' });
+    }
+});
 
 export default router;
