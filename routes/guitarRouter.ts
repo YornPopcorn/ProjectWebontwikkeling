@@ -6,7 +6,7 @@ import {
     getGuitarById,
     getGuitarsByBrandId,
     getBrandsWithCounts,
-    updateGuitar
+    updateGuitar, getFilteredAndSortedGuitars
 } from '../services/dbService';
 
 
@@ -14,15 +14,24 @@ const router = express.Router();
 
 router.get('/', async (req, res) => {
     try {
-        const [guitars, brands] = await Promise.all([
-            getGuitars(),
-            getBrands()
-        ]);
+        const { sort, direction, filter } = req.query;
+
+        const guitars = await getFilteredAndSortedGuitars(
+            filter as string,
+            sort as string || 'name',
+            direction as 'asc' | 'desc' || 'asc'
+        );
+
+        const brands = await getBrands();
+
         res.render('index', {
             guitars,
             brands,
-            title: "home",
-            activeTab: 'home'
+            title: "Guitar Overview",
+            activeTab: 'home',
+            currentSort: sort || 'name',
+            currentDirection: direction || 'asc',
+            currentFilter: filter || ''
         });
     } catch (error) {
         console.error('Error fetching guitars:', error);
@@ -93,12 +102,25 @@ router.get('/brand/:id', async (req, res) => {
 });
 
 // NEW: Route to show all brands with guitar counts
+// In guitarRouter.ts, vervang deze route:
 router.get('/brands', async (req, res) => {
     try {
+        // Haal merken op
         const brands = await getBrandsWithCounts();
-        res.render('brands', {
+        
+        // Haal gitaartypes op
+        const guitars = await getGuitars();
+        const guitarTypes = Array.from(new Set(guitars.map(guitar => guitar.type)));
+        
+        // Render de view met alle benodigde gegevens
+        res.render('BrandOverView', {
             brands,
-            title: "All Brands"
+            guitarTypes,  // Dit is wat je miste
+            title: "All Brands",
+            activeTab: 'brands',
+            currentSort: 'brandName', 
+            currentDirection: 'asc',
+            currentFilter: ''
         });
     } catch (error) {
         console.error('Error fetching brands:', error);

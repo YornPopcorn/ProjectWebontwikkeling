@@ -4,11 +4,11 @@ import path from "path";
 import session from "express-session";
 dotenv.config();
 import { connect } from "./services/db";
-import {
-    getGuitars,
-    getBrands
-} from "./services/dbService";
+import {getGuitars, getBrands} from "./services/dbService";
 import guitarRouter from "./routes/guitarRouter";
+import brandRouter from './routes/brandRouter';
+
+
 
 const app: Express = express();
 app.set("view engine", "ejs");
@@ -24,6 +24,14 @@ app.use(session({
     saveUninitialized: true,
 }));
 
+
+app.use(express.json());
+
+// Routers registreren
+app.use('/api/brands', brandRouter);
+
+
+
 app.use(async (req, res, next) => {
     try {
         res.locals.guitars = await getGuitars();
@@ -36,7 +44,7 @@ app.use(async (req, res, next) => {
 });
 
 app.use("/", guitarRouter);
-
+app.use('/', brandRouter);
 
 app.set("port", process.env.PORT || 3000);
 app.listen(app.get("port"), async () => {

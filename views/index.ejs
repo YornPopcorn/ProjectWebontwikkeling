@@ -8,6 +8,134 @@
     <div class="row">
         <div class="col-12">
             <h1 class="display-4 mb-4">Guitar Overview</h1>
+
+            <!-- Search and Filter Section -->
+            <div class="d-flex flex-wrap justify-content-between align-items-center mb-4">
+                <!-- Search Form -->
+                <form action="/" method="get" class="mb-3 mb-md-0" style="flex-grow: 1; max-width: 400px;">
+                    <div class="input-group">
+                        <input type="text" name="filter" class="form-control"
+                               placeholder="Search guitars..."
+                               value="<%= currentFilter || '' %>">
+                        <input type="hidden" name="sort" value="<%= currentSort || '' %>">
+                        <input type="hidden" name="direction" value="<%= currentDirection || '' %>">
+                        <button type="submit" class="btn btn-primary">
+                            <i class="fas fa-search"></i>
+                        </button>
+                    </div>
+                </form>
+
+                <!-- Sort Dropdown -->
+                <div class="d-flex align-items-center">
+                    <div class="btn-group me-2">
+                        <button type="button" class="btn btn-outline-secondary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                            <i class="fas fa-sort me-1"></i>
+                            Sort by
+                        </button>
+                        <ul class="dropdown-menu dropdown-menu-end">
+                            <li>
+                                <a class="dropdown-item <%= currentSort === 'name' && currentDirection === 'asc' ? 'active' : '' %>"
+                                   href="/?<%= new URLSearchParams({
+                                       ...(currentFilter && {filter: currentFilter}),
+                                       sort: 'name',
+                                       direction: 'asc'
+                                   }).toString() %>">
+                                    Name (A-Z)
+                                    <% if (currentSort === 'name' && currentDirection === 'asc') { %>
+                                        <i class="fas fa-check sort-indicator"></i>
+                                    <% } %>
+                                </a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item <%= currentSort === 'name' && currentDirection === 'desc' ? 'active' : '' %>"
+                                   href="/?<%= new URLSearchParams({
+                                       ...(currentFilter && {filter: currentFilter}),
+                                       sort: 'name',
+                                       direction: 'desc'
+                                   }).toString() %>">
+                                    Name (Z-A)
+                                    <% if (currentSort === 'name' && currentDirection === 'desc') { %>
+                                        <i class="fas fa-check sort-indicator"></i>
+                                    <% } %>
+                                </a>
+                            </li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li>
+                                <a class="dropdown-item <%= currentSort === 'brand' && currentDirection === 'asc' ? 'active' : '' %>"
+                                   href="/?<%= new URLSearchParams({
+                                       ...(currentFilter && {filter: currentFilter}),
+                                       sort: 'brand',
+                                       direction: 'asc'
+                                   }).toString() %>">
+                                    Brand (A-Z)
+                                    <% if (currentSort === 'brand' && currentDirection === 'asc') { %>
+                                        <i class="fas fa-check sort-indicator"></i>
+                                    <% } %>
+                                </a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item <%= currentSort === 'brand' && currentDirection === 'desc' ? 'active' : '' %>"
+                                   href="/?<%= new URLSearchParams({
+                                       ...(currentFilter && {filter: currentFilter}),
+                                       sort: 'brand',
+                                       direction: 'desc'
+                                   }).toString() %>">
+                                    Brand (Z-A)
+                                    <% if (currentSort === 'brand' && currentDirection === 'desc') { %>
+                                        <i class="fas fa-check sort-indicator"></i>
+                                    <% } %>
+                                </a>
+                            </li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li>
+                                <a class="dropdown-item <%= currentSort === 'type' && currentDirection === 'asc' ? 'active' : '' %>"
+                                   href="/?<%= new URLSearchParams({
+                                       ...(currentFilter && {filter: currentFilter}),
+                                       sort: 'type',
+                                       direction: 'asc'
+                                   }).toString() %>">
+                                    Type (A-Z)
+                                    <% if (currentSort === 'type' && currentDirection === 'asc') { %>
+                                        <i class="fas fa-check sort-indicator"></i>
+                                    <% } %>
+                                </a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item <%= currentSort === 'age' && currentDirection === 'desc' ? 'active' : '' %>"
+                                   href="/?<%= new URLSearchParams({
+                                       ...(currentFilter && {filter: currentFilter}),
+                                       sort: 'age',
+                                       direction: 'desc'
+                                   }).toString() %>">
+                                    Age (Oldest first)
+                                    <% if (currentSort === 'age' && currentDirection === 'desc') { %>
+                                        <i class="fas fa-check sort-indicator"></i>
+                                    <% } %>
+                                </a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item <%= currentSort === 'age' && currentDirection === 'asc' ? 'active' : '' %>"
+                                   href="/?<%= new URLSearchParams({
+                                       ...(currentFilter && {filter: currentFilter}),
+                                       sort: 'age',
+                                       direction: 'asc'
+                                   }).toString() %>">
+                                    Age (Newest first)
+                                    <% if (currentSort === 'age' && currentDirection === 'asc') { %>
+                                        <i class="fas fa-check sort-indicator"></i>
+                                    <% } %>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <% if (currentFilter || currentSort) { %>
+                        <a href="/" class="btn btn-outline-danger">
+                            <i class="fas fa-times"></i> Reset
+                        </a>
+                    <% } %>
+                </div>
+            </div>
         </div>
     </div>
 
@@ -37,21 +165,14 @@
         <div class="col-md-9">
             <div class="card shadow-sm">
                 <div class="card-body">
-                    <!-- Search filter -->
-                    <div class="mb-3">
-                        <div class="input-group">
-                            <input type="text" id="nameFilter" class="form-control" placeholder="Filter by name...">
-                        </div>
-                    </div>
-
                     <div class="table-responsive">
-                        <table class="table table-hover" id="guitarsTable">
+                        <table class="table table-hover">
                             <thead class="table-dark">
                             <tr>
-                                <th onclick="sortTable(0)" class="sortable">ID <span class="sort-icon"></span></th>
-                                <th onclick="sortTable(1)" class="sortable">Name <span class="sort-icon"></span></th>
-                                <th onclick="sortTable(2)" class="sortable">Brand <span class="sort-icon"></span></th>
-                                <th onclick="sortTable(3)" class="sortable">Type <span class="sort-icon"></span></th>
+                                <th>ID</th>
+                                <th>Name</th>
+                                <th>Brand</th>
+                                <th>Type</th>
                                 <th>Description</th>
                                 <th>details</th>
                             </tr>
@@ -87,108 +208,8 @@
 </div>
 
 <!-- Bootstrap Bundle with Popper -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 <!-- Font Awesome for icons -->
-<script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
-
-<style>
-    .sortable {
-        cursor: pointer;
-    }
-    .sortable:hover {
-        background-color: #343a40;
-    }
-    .sort-icon::after {
-        content: "⇵";
-        margin-left: 5px;
-        opacity: 0.5;
-    }
-    .asc::after {
-        content: "↑";
-        opacity: 1;
-    }
-    .desc::after {
-        content: "↓";
-        opacity: 1;
-    }
-</style>
-
-<script>
-    // Variable to track sorting order
-    let sortOrders = [0, 0, 0, 0, 0]; // 0: none, 1: asc, 2: desc
-
-    function sortTable(columnIndex) {
-        const table = document.getElementById("guitarsTable");
-        const tbody = table.querySelector("tbody");
-        const rows = Array.from(tbody.querySelectorAll("tr"));
-        const headers = table.querySelectorAll("th.sortable");
-
-        // Reset other column headers
-        headers.forEach((header, index) => {
-            if (index !== columnIndex) {
-                header.querySelector('.sort-icon').className = 'sort-icon';
-                sortOrders[index] = 0;
-            }
-        });
-
-        // Update current column sort order
-        sortOrders[columnIndex] = (sortOrders[columnIndex] + 1) % 3;
-        const sortIcon = headers[columnIndex].querySelector('.sort-icon');
-
-        if (sortOrders[columnIndex] === 0) {
-            // Reset to original order
-            sortIcon.className = 'sort-icon';
-            location.reload(); // Simpler way to restore original order
-            return;
-        } else if (sortOrders[columnIndex] === 1) {
-            // Ascending order
-            sortIcon.className = 'sort-icon asc';
-        } else {
-            // Descending order
-            sortIcon.className = 'sort-icon desc';
-        }
-
-        // Sort rows
-        rows.sort((a, b) => {
-            let valueA = a.cells[columnIndex].textContent.trim();
-            let valueB = b.cells[columnIndex].textContent.trim();
-
-            // If we're sorting ID column, convert to numbers
-            if (columnIndex === 0) {
-                valueA = parseInt(valueA);
-                valueB = parseInt(valueB);
-                return sortOrders[columnIndex] === 1 ? valueA - valueB : valueB - valueA;
-            } else {
-                // String comparison for other columns
-                return sortOrders[columnIndex] === 1
-                    ? valueA.localeCompare(valueB)
-                    : valueB.localeCompare(valueA);
-            }
-        });
-
-        // Reorder table
-        rows.forEach(row => tbody.appendChild(row));
-    }
-
-    function filterTable() {
-        const filter = document.getElementById('nameFilter').value.toLowerCase();
-        const table = document.getElementById('guitarsTable');
-        const rows = table.querySelectorAll('tbody tr');
-
-        rows.forEach(row => {
-            const nameCell = row.cells[1]; // Name column
-            const nameText = nameCell.textContent.toLowerCase();
-
-            if (nameText.includes(filter)) {
-                row.style.display = '';
-            } else {
-                row.style.display = 'none';
-            }
-        });
-    }
-
-    // Also filter when typing (real-time filtering)
-    document.getElementById('nameFilter').addEventListener('keyup', filterTable);
-</script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </body>
 </html>

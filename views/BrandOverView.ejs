@@ -1,0 +1,224 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+    <title><%= title %></title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body class="bg-light">
+<%- include('partials/navbar') %>
+
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-12">
+            <h1 class="display-4 mb-4">Our Guitar Brands</h1>
+
+            <!-- Search and Filter Section -->
+            <div class="d-flex flex-wrap justify-content-between align-items-center mb-4">
+                <!-- Search Form -->
+                <form action="/brandOverView" method="get" class="mb-3 mb-md-0" style="flex-grow: 1; max-width: 400px;">
+                    <div class="input-group">
+                        <input type="text" name="filter" class="form-control"
+                               placeholder="Search brands..."
+                               value="<%= currentFilter || '' %>">
+                        <input type="hidden" name="sort" value="<%= currentSort || '' %>">
+                        <input type="hidden" name="direction" value="<%= currentDirection || '' %>">
+                        <button type="submit" class="btn btn-primary">
+                            <i class="fas fa-search"></i>
+                        </button>
+                    </div>
+                </form>
+
+                <!-- Sort Dropdown -->
+                <div class="d-flex align-items-center">
+                    <div class="btn-group me-2">
+                        <button type="button" class="btn btn-outline-secondary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                            <i class="fas fa-sort me-1"></i>
+                            Sort by
+                        </button>
+                        <ul class="dropdown-menu dropdown-menu-end">
+                            <li>
+                                <a class="dropdown-item <%= currentSort === 'brandName' && currentDirection === 'asc' ? 'active' : '' %>"
+                                   href="/brandOverView?<%= new URLSearchParams({
+                                       ...(currentFilter && {filter: currentFilter}),
+                                       sort: 'brandName',
+                                       direction: 'asc'
+                                   }).toString() %>">
+                                    Name (A-Z)
+                                    <% if (currentSort === 'brandName' && currentDirection === 'asc') { %>
+                                        <i class="fas fa-check sort-indicator"></i>
+                                    <% } %>
+                                </a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item <%= currentSort === 'brandName' && currentDirection === 'desc' ? 'active' : '' %>"
+                                   href="/brandOverView?<%= new URLSearchParams({
+                                       ...(currentFilter && {filter: currentFilter}),
+                                       sort: 'brandName',
+                                       direction: 'desc'
+                                   }).toString() %>">
+                                    Name (Z-A)
+                                    <% if (currentSort === 'brandName' && currentDirection === 'desc') { %>
+                                        <i class="fas fa-check sort-indicator"></i>
+                                    <% } %>
+                                </a>
+                            </li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li>
+                                <a class="dropdown-item <%= currentSort === 'country' && currentDirection === 'asc' ? 'active' : '' %>"
+                                   href="/brandOverView?<%= new URLSearchParams({
+                                       ...(currentFilter && {filter: currentFilter}),
+                                       sort: 'country',
+                                       direction: 'asc'
+                                   }).toString() %>">
+                                    Country (A-Z)
+                                    <% if (currentSort === 'country' && currentDirection === 'asc') { %>
+                                        <i class="fas fa-check sort-indicator"></i>
+                                    <% } %>
+                                </a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item <%= currentSort === 'country' && currentDirection === 'desc' ? 'active' : '' %>"
+                                   href="/brandOverView?<%= new URLSearchParams({
+                                       ...(currentFilter && {filter: currentFilter}),
+                                       sort: 'country',
+                                       direction: 'desc'
+                                   }).toString() %>">
+                                    Country (Z-A)
+                                    <% if (currentSort === 'country' && currentDirection === 'desc') { %>
+                                        <i class="fas fa-check sort-indicator"></i>
+                                    <% } %>
+                                </a>
+                            </li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li>
+                                <a class="dropdown-item <%= currentSort === 'yearFounded' && currentDirection === 'desc' ? 'active' : '' %>"
+                                   href="/brandOverView?<%= new URLSearchParams({
+                                       ...(currentFilter && {filter: currentFilter}),
+                                       sort: 'yearFounded',
+                                       direction: 'desc'
+                                   }).toString() %>">
+                                    Year (Oldest first)
+                                    <% if (currentSort === 'yearFounded' && currentDirection === 'desc') { %>
+                                        <i class="fas fa-check sort-indicator"></i>
+                                    <% } %>
+                                </a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item <%= currentSort === 'yearFounded' && currentDirection === 'asc' ? 'active' : '' %>"
+                                   href="/brandOverView?<%= new URLSearchParams({
+                                       ...(currentFilter && {filter: currentFilter}),
+                                       sort: 'yearFounded',
+                                       direction: 'asc'
+                                   }).toString() %>">
+                                    Year (Newest first)
+                                    <% if (currentSort === 'yearFounded' && currentDirection === 'asc') { %>
+                                        <i class="fas fa-check sort-indicator"></i>
+                                    <% } %>
+                                </a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item <%= currentSort === 'guitarCount' && currentDirection === 'desc' ? 'active' : '' %>"
+                                   href="/brandOverView?<%= new URLSearchParams({
+                                       ...(currentFilter && {filter: currentFilter}),
+                                       sort: 'guitarCount',
+                                       direction: 'desc'
+                                   }).toString() %>">
+                                    Most Guitars
+                                    <% if (currentSort === 'guitarCount' && currentDirection === 'desc') { %>
+                                        <i class="fas fa-check sort-indicator"></i>
+                                    <% } %>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <% if (currentFilter || currentSort) { %>
+                        <a href="/brandOverView" class="btn btn-outline-danger">
+                            <i class="fas fa-times"></i> Reset
+                        </a>
+                    <% } %>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <!-- Guitar Filter Sidebar -->
+        <div class="col-md-3 mb-4">
+            <div class="card shadow-sm">
+                <div class="card-header bg-primary text-white">
+                    <h3 class="h5 mb-0">Guitars</h3>
+                </div>
+                <div class="card-body">
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item">
+                            <a href="/brandOverView" class="text-decoration-none fw-bold">
+                                <i class="fas fa-tags me-2"></i>
+                                All guitars
+                            </a>
+                        </li>
+                        <% if (guitarTypes && guitarTypes.length > 0) { %>
+                            <% guitarTypes.forEach(type => { %>
+
+                            <% }); %>
+                        <% } %>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-9">
+            <% if (brands.length === 0) { %>
+                <div class="alert alert-info">
+                    No brands found matching your criteria.
+                    <a href="/brandOverView" class="alert-link">Reset filters</a>
+                </div>
+            <% } else { %>
+                <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+                    <% brands.forEach(brand => { %>
+                        <div class="col">
+                            <div class="card h-100 shadow-sm hover-shadow">
+                                <a href="/brand/<%= brand.id %>" class="text-decoration-none text-dark">
+                                    <div class="card-body">
+                                        <h5 class="card-title"><%= brand.brandName %></h5>
+                                        <div class="d-flex justify-content-between align-items-center mb-2">
+                                            <span class="badge bg-info"><%= brand.country %></span>
+                                            <span class="badge bg-warning text-dark">Founded: <%= brand.yearFounded %></span>
+                                        </div>
+                                        <p class="card-text small text-muted">
+                                            <% if (brand.website) { %>
+                                                <a href="<%= brand.website %>" target="_blank" class="text-muted">
+                                                    <i class="fas fa-external-link-alt me-1"></i> Official Website
+                                                </a>
+                                            <% } else { %>
+                                                No website available
+                                            <% } %>
+                                        </p>
+                                    </div>
+                                    <div class="card-footer bg-white border-top-0">
+                                        <div class="d-flex justify-content-between align-items-center">
+                                            <span class="badge bg-success">
+                                                <i class="fas fa-guitar me-1"></i> <%= brand.guitarCount || 0 %> Guitars
+                                            </span>
+                                            <i class="fas fa-chevron-right text-muted"></i>
+                                        </div>
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+                    <% }); %>
+                </div>
+            <% } %>
+        </div>
+    </div>
+</div>
+
+<script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+</body>
+</html>
