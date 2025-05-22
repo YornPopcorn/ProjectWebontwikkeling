@@ -107,7 +107,7 @@
       <workItem from="1747869051726" duration="14200000" />
       <workItem from="1747911050482" duration="11578000" />
       <workItem from="1747923123132" duration="7164000" />
-      <workItem from="1747930583149" duration="10844000" />
+      <workItem from="1747930583149" duration="11222000" />
     </task>
     <task id="LOCAL-00001" summary="Add project structure with initial routes and views&#10;&#10;Initialized the project by adding .idea configuration files, a brand router in the &quot;routes&quot; directory, and two view templates: &quot;BrandOverView.ejs&quot; and &quot;registration_form.ejs&quot;. These additions set up the foundation for handling brand-related requests and rendering views.">
       <option name="closed" value="true" />
@@ -141,7 +141,15 @@
       <option name="project" value="LOCAL" />
       <updated>1747917700943</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="comftrable safe point">
+      <option name="closed" value="true" />
+      <created>1747941627392</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1747941627393</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -152,6 +160,7 @@
     <MESSAGE value="Add brand and guitar filters with sorting and routing&#10;&#10;Implemented filtering and sorting for guitars and brands, enhancing user experience on the BrandOverView and Guitar Overview pages. Added routing for brand and guitar-specific endpoints, including a dedicated router for brands. Updated the views and database service methods to support dynamic data handling and optimized UI/UX." />
     <MESSAGE value="Refactor file structure and add authentication features&#10;&#10;Reorganized the directory structure by relocating database-related files to a dedicated folder. Added authentication routes, middleware, and user type definitions. Included new views for error, login, and registration pages." />
     <MESSAGE value="Add Prettier configuration and initializeUser service&#10;&#10;Introduce a .prettierrc file to standardize code formatting across the project. Additionally, create the initializeUser.ts service to handle user initialization logic. These changes improve code consistency and lay the groundwork for user-related features." />
-    <option name="LAST_COMMIT_MESSAGE" value="Add Prettier configuration and initializeUser service&#10;&#10;Introduce a .prettierrc file to standardize code formatting across the project. Additionally, create the initializeUser.ts service to handle user initialization logic. These changes improve code consistency and lay the groundwork for user-related features." />
+    <MESSAGE value="comftrable safe point" />
+    <option name="LAST_COMMIT_MESSAGE" value="comftrable safe point" />
   </component>
 </project>
