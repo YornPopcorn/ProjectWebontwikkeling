@@ -10,27 +10,6 @@ const secret = process.env.JWT_SECRET ?? "";
 
 export function loginRouter() {
 	const router = Router();
-	router.get("/login", (req, res) => {
-		res.render("login");
-	});
-
-	router.post("/login", async (req, res) => {
-		try {
-			const password: string = req.body.password;
-			const username: string = req.body.username;
-			const user: User = await login(username, password);
-
-			delete user.password;
-			const token = jwt.sign(user, secret, { expiresIn: "7d" });
-
-			res.cookie("jwt", token, { httpOnly: true, sameSite: "lax", secure: true });
-			// Redirect to dashboard instead of root
-			res.redirect("/dashboard");
-		} catch (e: any) {
-			res.redirect("/login");
-		}
-	});
-
 	router.get("/register", (req, res) => {
 		res.render("register", { error: null });
 	});
@@ -51,6 +30,27 @@ export function loginRouter() {
 			res.redirect("/login");
 		} catch (error) {
 			res.status(500).send("Registration failed");
+		}
+	});
+
+	router.get("/login", (req, res) => {
+		res.render("login");
+	});
+
+	router.post("/login", async (req, res) => {
+		try {
+			const password: string = req.body.password;
+			const username: string = req.body.username;
+			const user: User = await login(username, password);
+
+			delete user.password;
+			const token = jwt.sign(user, secret, { expiresIn: "7d" });
+
+			res.cookie("jwt", token, { httpOnly: true, sameSite: "lax", secure: true });
+			// Redirect to dashboard instead of root
+			res.redirect("/dashboard");
+		} catch (e: any) {
+			res.redirect("/login");
 		}
 	});
 
