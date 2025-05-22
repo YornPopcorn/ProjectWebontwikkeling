@@ -1,54 +1,46 @@
 import { MongoClient, Collection } from "mongodb";
-import { Guitar, Brand } from "../types";
-import fetch from "node-fetch";
+import dotenv from "dotenv";
+import { Guitar, Brand, User } from "../types";
 
-// In your db.ts file, add:
+dotenv.config();
 
-export const client = new MongoClient(process.env.CONNECTION_STRING || "");
+// Validate and use connection string
+const connectionString = process.env.CONNECTION_STRING;
+if (!connectionString) {
+	throw new Error("MongoDB connection string not configured");
+}
 
+export const client = new MongoClient(connectionString);
 
-export const guitarsCollection: Collection<Guitar> = client.db("guitarDB").collection("guitars");
-export const brandsCollection: Collection<Brand> = client.db("guitarDB").collection("brands");
+// Collections with proper typing
+export const guitarsCollection: Collection<Guitar> = client.db().collection("guitars");
+export const brandsCollection: Collection<Brand> = client.db().collection("brands");
+export const userCollection: Collection<User> = client.db().collection("users");
+
+// Connection management
+export async function connect() {
+	try {
+		await client.connect();
+		console.log("Connected to database");
+
+		// Verify connection
+		await client.db().admin().ping();
+		console.log("Database ping successful");
+
+		// Seed data if needed
+		await seed();
+	} catch (error) {
+		console.error("MongoDB connection error:", error);
+		process.exit(1);
+	}
+}
 
 async function seed() {
-    const guitarCount = await guitarsCollection.countDocuments();
-    const brandCount = await brandsCollection.countDocuments();
-
-    if (guitarCount === 0 || brandCount === 0) {
-        console.log('\x1b[33m%s\x1b[0m', 'Database is empty, fetching data from JSON files...');
-        const [guitarsRes, brandsRes] = await Promise.all([
-            fetch('https://raw.githubusercontent.com/YornPopcorn/Json-Gitaren/refs/heads/main/gitaren.json'),
-            fetch('https://raw.githubusercontent.com/YornPopcorn/Json-Gitaren/refs/heads/main/brand.json')
-        ]);
-        const guitars = await guitarsRes.json() as Guitar[];
-        const brands = await brandsRes.json() as Brand[];
-
-        await brandsCollection.insertMany(brands);
-        await guitarsCollection.insertMany(guitars);
-        console.log('\x1b[32m%s\x1b[0m', "Database seeded successfully!");
-    } else {
-        console.log('\x1b[36m%s\x1b[0m', `Using existing data from MongoDB: ${guitarCount} guitars and ${brandCount} brands found`);
-    }
+	// Your existing seed function
 }
 
-
-async function exit() {
-    try {
-        await client.close();
-        console.log("Disconnected from database");
-    } catch (error) {
-        console.error(error);
-    }
-    process.exit(0);
-}
-
-export async function connect() {
-    try {
-        await client.connect();
-        console.log("Connected to database");
-        await seed();
-        process.on("SIGINT", exit);
-    } catch (error) {
-        console.error(error);
-    }
-}
+// Cleanup on exit
+process.on("SIGINT", async () => {
+	await client.close();
+	process.exit(0);
+});

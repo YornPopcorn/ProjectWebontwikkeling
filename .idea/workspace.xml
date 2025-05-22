@@ -37,13 +37,18 @@
     &quot;accountId&quot;: &quot;b2d6c5d0-228f-47da-856d-9571b6ec53a1&quot;
   }
 }</component>
+  <component name="ProblemsViewState">
+    <option name="selectedTabId" value="CurrentFile" />
+  </component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 6
 }</component>
   <component name="ProjectId" id="2xQ11h65TtfEJDOccT6t8LYHVPh" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showExcludedFiles" value="false" />
     <option name="showLibraryContents" value="true" />
+    <option name="showMembers" value="true" />
   </component>
   <component name="PropertiesComponent">{
   &quot;keyToString&quot;: {
@@ -51,7 +56,6 @@
     &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
-    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
     &quot;git-widget-placeholder&quot;: &quot;main&quot;,
     &quot;junie.onboarding.icon.badge.shown&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
@@ -59,11 +63,15 @@
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
     &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
     &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;vcs.Git&quot;,
+    &quot;prettierjs.PrettierConfiguration.Package&quot;: &quot;C:\\Users\\UITLEEN\\WebstormProjects\\ProjectWebontwikkeling\\node_modules\\prettier&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.keymap&quot;,
     &quot;ts.external.directory.path&quot;: &quot;C:\\Users\\UITLEEN\\WebstormProjects\\ProjectWebontwikkeling\\node_modules\\typescript\\lib&quot;,
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   },
   &quot;keyToStringList&quot;: {
+    &quot;DatabaseDriversLRU&quot;: [
+      &quot;mongo&quot;
+    ],
     &quot;GitStage.ChangesTree.GroupingKeys&quot;: [
       &quot;directory&quot;,
       &quot;module&quot;,
@@ -73,6 +81,8 @@
 }</component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\UITLEEN\WebstormProjects\ProjectWebontwikkeling\middleware" />
+      <recent name="C:\Users\UITLEEN\WebstormProjects\ProjectWebontwikkeling" />
       <recent name="C:\Users\UITLEEN\WebstormProjects\ProjectWebontwikkeling\views" />
     </key>
   </component>
@@ -94,7 +104,10 @@
       <workItem from="1747867009702" duration="856000" />
       <workItem from="1747867904708" duration="769000" />
       <workItem from="1747868755881" duration="216000" />
-      <workItem from="1747869051726" duration="1469000" />
+      <workItem from="1747869051726" duration="14200000" />
+      <workItem from="1747911050482" duration="11578000" />
+      <workItem from="1747923123132" duration="7164000" />
+      <workItem from="1747930583149" duration="10844000" />
     </task>
     <task id="LOCAL-00001" summary="Add project structure with initial routes and views&#10;&#10;Initialized the project by adding .idea configuration files, a brand router in the &quot;routes&quot; directory, and two view templates: &quot;BrandOverView.ejs&quot; and &quot;registration_form.ejs&quot;. These additions set up the foundation for handling brand-related requests and rendering views.">
       <option name="closed" value="true" />
@@ -104,7 +117,31 @@
       <option name="project" value="LOCAL" />
       <updated>1747864167849</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="Add brand and guitar filters with sorting and routing&#10;&#10;Implemented filtering and sorting for guitars and brands, enhancing user experience on the BrandOverView and Guitar Overview pages. Added routing for brand and guitar-specific endpoints, including a dedicated router for brands. Updated the views and database service methods to support dynamic data handling and optimized UI/UX.">
+      <option name="closed" value="true" />
+      <created>1747870655257</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1747870655257</updated>
+    </task>
+    <task id="LOCAL-00003" summary="Refactor file structure and add authentication features&#10;&#10;Reorganized the directory structure by relocating database-related files to a dedicated folder. Added authentication routes, middleware, and user type definitions. Included new views for error, login, and registration pages.">
+      <option name="closed" value="true" />
+      <created>1747883322483</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1747883322483</updated>
+    </task>
+    <task id="LOCAL-00004" summary="Add Prettier configuration and initializeUser service&#10;&#10;Introduce a .prettierrc file to standardize code formatting across the project. Additionally, create the initializeUser.ts service to handle user initialization logic. These changes improve code consistency and lay the groundwork for user-related features.">
+      <option name="closed" value="true" />
+      <created>1747917700943</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1747917700943</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -112,6 +149,9 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Add project structure with initial routes and views&#10;&#10;Initialized the project by adding .idea configuration files, a brand router in the &quot;routes&quot; directory, and two view templates: &quot;BrandOverView.ejs&quot; and &quot;registration_form.ejs&quot;. These additions set up the foundation for handling brand-related requests and rendering views." />
-    <option name="LAST_COMMIT_MESSAGE" value="Add project structure with initial routes and views&#10;&#10;Initialized the project by adding .idea configuration files, a brand router in the &quot;routes&quot; directory, and two view templates: &quot;BrandOverView.ejs&quot; and &quot;registration_form.ejs&quot;. These additions set up the foundation for handling brand-related requests and rendering views." />
+    <MESSAGE value="Add brand and guitar filters with sorting and routing&#10;&#10;Implemented filtering and sorting for guitars and brands, enhancing user experience on the BrandOverView and Guitar Overview pages. Added routing for brand and guitar-specific endpoints, including a dedicated router for brands. Updated the views and database service methods to support dynamic data handling and optimized UI/UX." />
+    <MESSAGE value="Refactor file structure and add authentication features&#10;&#10;Reorganized the directory structure by relocating database-related files to a dedicated folder. Added authentication routes, middleware, and user type definitions. Included new views for error, login, and registration pages." />
+    <MESSAGE value="Add Prettier configuration and initializeUser service&#10;&#10;Introduce a .prettierrc file to standardize code formatting across the project. Additionally, create the initializeUser.ts service to handle user initialization logic. These changes improve code consistency and lay the groundwork for user-related features." />
+    <option name="LAST_COMMIT_MESSAGE" value="Add Prettier configuration and initializeUser service&#10;&#10;Introduce a .prettierrc file to standardize code formatting across the project. Additionally, create the initializeUser.ts service to handle user initialization logic. These changes improve code consistency and lay the groundwork for user-related features." />
   </component>
 </project>
